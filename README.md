@@ -26,7 +26,7 @@ Students can browse the menu, place orders, and track the order status, while th
 |  Name              |  Roll No.    |
 |---------------------|----------------|
 | Prajit Kumar Singh  | 2400520100054  |
-| Bob                 | 102            |
+| Priyanshu           | 2400520100057  |
 | Charlie             | 103            |
 | David               | 104            |
 | Eva                 | 105            |
