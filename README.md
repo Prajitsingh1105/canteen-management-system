@@ -20,6 +20,18 @@ The **Online Canteen Management System** solves this problem by providing:
 Students can browse the menu, place orders, and track the order status, while the canteen staff can manage and update orders through the admin panel.
 
 ---
+# 👥 Developed By  
+### 👨‍💻 Team: *Parse*
+
+|  Name              |  Roll No.    |
+|---------------------|----------------|
+| Prajit Kumar Singh  | 2400520100054  |
+| Bob                 | 102            |
+| Charlie             | 103            |
+| David               | 104            |
+| Eva                 | 105            |
+
+---
 
 # 🚀 Features
 
