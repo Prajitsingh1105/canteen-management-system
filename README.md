@@ -28,7 +28,7 @@ Students can browse the menu, place orders, and track the order status, while th
 | Prajit Kumar Singh  | 2400520100054  |
 | Priyanshu           | 2400520100057  |
 | Parth Mishra        | 2400520100053  |
-| David               | 104            |
+| Sachlang Debbarma   | 2400520100063  |
 | Eva                 | 105            |
 
 ---
