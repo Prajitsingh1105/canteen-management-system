@@ -29,7 +29,7 @@ Students can browse the menu, place orders, and track the order status, while th
 | Priyanshu           | 2400520100057  |
 | Parth Mishra        | 2400520100053  |
 | Sachlang Debbarma   | 2400520100063  |
-| Eva                 | 105            |
+| Umang Rana          | 2400520100070  |
 
 ---
 
