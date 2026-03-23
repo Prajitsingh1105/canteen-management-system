@@ -18,10 +18,10 @@ export const sendEmail = async (to, subject, text) => {
       text,
     });
 
-    console.log("✅ Email sent via SendGrid");
+    console.log("Email sent via SendGrid");
 
   } catch (error) {
-    console.error("❌ SendGrid error:", error.response?.body || error);
+    console.error("SendGrid error:", error.response?.body || error);
     throw error;
   }
 };
