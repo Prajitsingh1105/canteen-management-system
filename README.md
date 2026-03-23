@@ -1,4 +1,7 @@
-# 🍽️ Online Canteen Management System
+<p align="center">
+  <h1>🍽️ FlashEats</h1>
+  <p>Smart Canteen Ordering System </p>
+</p>
 
 A **web-based platform** that allows students to order food from the college canteen online and enables canteen staff to manage orders efficiently through an admin dashboard.
 
@@ -76,40 +79,64 @@ The system follows a **full-stack web architecture**:
 
 ---
 
-# 🛠️ Technology Stack
+# 🛠️ Tech Stack
 
 ## Frontend
-- React.js
-- Tailwind CSS
+<p align="left">
+  <img src="https://img.shields.io/badge/React.js-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-0F172A?style=for-the-badge&logo=tailwind-css&logoColor=38B2AC" />
+</p>
+
 
 ## Backend
-- Node.js
-- Express.js
+<p align="left">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
+</p>
+
 
 ## Database
-- MongoDB
+<p align="left">
+  <img src="https://img.shields.io/badge/MongoDB-001E2B?style=for-the-badge&logo=mongodb&logoColor=4EA94B" />
+</p>
+
 
 ## Authentication
-- JSON Web Tokens (JWT)
-- bcrypt
+<p align="left">
+  <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jsonwebtokens" />
+  <img src="https://img.shields.io/badge/bcrypt-003A8F?style=for-the-badge&logo=security&logoColor=white" />
+</p>
 
-## Deployment
-- Frontend: Vercel
-- Backend: Render
-- Version Control: GitHub
+
+## Deployment & Tools
+<p align="left">
+  <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900" />
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
+</p>
 
 ---
 
 # 📂 Project Structure
-- ├── client
-   - ├── components
-   - ├── pages
-   - ├── context
-   - ├── App.jsx
-- ├── server
-  - ├── routes
-  - ├── controllers
-  - ├── models
-  - ├── server.js
-- ├── README.md
+```
+📦 FlashEats
+├── 📁 client
+|   ├── 📁 api
+│   ├── 📁 components
+│   ├── 📁 pages
+│   ├── 📁 context
+│   ├── 📄 main.jsx
+│   └── 📄 App.jsx
+│
+├── 📁 server
+│   ├── 📁 routes
+│   ├── 📁 utils
+│   ├── 📁 config
+│   ├── 📁 middlewares
+│   ├── 📁 models
+│   └── 📄 server.js
+│
+└── 📄 README.md
+```
+
+---
 
