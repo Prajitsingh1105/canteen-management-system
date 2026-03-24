@@ -69,7 +69,7 @@ The system follows a **full-stack web architecture**:
 
 2. **Backend Layer**
    - Built using Node.js and Express.js
-   - Handles API requests and business logic
+   - Handles API requests and logic
 
 3. **Database Layer**
    - MongoDB used for storing users, menu items, and orders
