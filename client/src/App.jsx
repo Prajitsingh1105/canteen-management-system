@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
-function App() {
-  const [count, setCount] = useState(0)
+import LandingPage from "./pages/LandingPage"; 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+import StudentLayout from "./pages/student/StudentLayout";
+import MenuPage from "./pages/student/MenuPage";
+import CartPage from "./pages/student/CartPage";
+import OrdersPage from "./pages/student/OrdersPage";
+
+
+import AdminLayout from "./pages/admin/AdminLayout";
+import ManageMenuPage from "./pages/admin/ManageMenuPage";
+import AdminOrdersPage from "./pages/admin/OrderPage";
+import AnalyticsPage from "./pages/admin/AnalyticsPage";
+
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
+
+function ProtectedRoute({ children, role }) {
+  const { user } = useAuth();
+
+
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  if (role && user.role !== role) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
 }
 
-export default App
+function App() {
+  return (
+    <>
+      <Toaster position="top-right" />
+      <AuthProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
+              
+              <Route path="/" element={<LandingPage />} />
+
+              
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+
+              
+              <Route
+                path="/student"
+                element={
+                  <ProtectedRoute role="student">
+                    <StudentLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="menu" element={<MenuPage />} />
+                <Route path="cart" element={<CartPage />} />
+                <Route path="orders" element={<OrdersPage />} />
+                <Route index element={<Navigate to="menu" />} />
+              </Route>
+
+              
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute role="admin">
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="menu" element={<ManageMenuPage />} />
+                <Route path="orders" element={<AdminOrdersPage />} />
+                <Route path="analytics" element={<AnalyticsPage />} />
+                <Route index element={<Navigate to="menu" />} />
+              </Route>
+
+             
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </AuthProvider>
+    </>
+  );
+}
+
+export default App;
