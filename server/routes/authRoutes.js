@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // ❗ Only college email
+    // Only college email
     if (!email.endsWith("@ietlucknow.ac.in")) {
       return res.status(400).json({
         message: "Use college email only"
