@@ -1,13 +1,13 @@
 import API from "./axios";
 
 export const getSummary = () => {
-  return API.get("/analytics/summary");
+  return API.get("/api/analytics/summary");
 };
 
 export const getWeeklyAnalytics = () => {
-  return API.get("/analytics/weekly");
+  return API.get("/api/analytics/weekly");
 };
 
 export const getTopItems = () => {
-  return API.get("/analytics/top-items");
+  return API.get("/api/analytics/top-items");
 };
