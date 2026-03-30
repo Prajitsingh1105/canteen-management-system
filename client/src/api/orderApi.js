@@ -18,13 +18,13 @@ export const createOrder = async (data) => {
 };
 
 export const getMyOrders = () => {
-  return API.get("/orders/my-orders");
+  return API.get("/api/orders/my-orders");
 };
 
 export const getAllOrders = () => {
-  return API.get("/orders");
+  return API.get("/api/orders");
 };
 
 export const updateOrderStatus = (id, status) => {
-  return API.patch(`/orders/${id}`, { status });
+  return API.patch(`/api/orders/${id}`, { status });
 };
