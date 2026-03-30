@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin } from "@react-oauth/google";
 
 import API from "../api/axios";
@@ -14,7 +13,6 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
-  const [captcha, setCaptcha] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // ✅ Google Login
@@ -66,10 +64,6 @@ function Login() {
       return alert("OTP is required");
     }
 
-    if (!captcha) {
-      return alert("Please complete reCAPTCHA");
-    }
-
     try {
       setLoading(true);
 
@@ -78,7 +72,6 @@ function Login() {
         password: role === "student" ? password : undefined,
         otp: role === "admin" ? otp : undefined,
         role,
-        captcha,
       });
 
       localStorage.setItem("user", JSON.stringify(res.data));
@@ -157,15 +150,6 @@ function Login() {
             <option value="student">Student</option>
             <option value="admin">Admin</option>
           </select>
-
-          {/* CAPTCHA (MANDATORY) */}
-          <div className="flex justify-center scale-90">
-            <ReCAPTCHA
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-              onChange={(value) => setCaptcha(value)}
-              theme="dark"
-            />
-          </div>
 
           {/* LOGIN BUTTON */}
           <motion.button
