@@ -20,7 +20,7 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await API.post("/auth/google", {
+      const res = await API.post("/api/auth/google", {
         token: credentialResponse.credential,
       });
 
@@ -40,7 +40,7 @@ function Login() {
     }
 
     try {
-      await API.post("/auth/send-otp", { email });
+      await API.post("/api/auth/send-otp", { email });
       alert("OTP sent to email");
     } catch (err) {
       alert("Failed to send OTP");
