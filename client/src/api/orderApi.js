@@ -1,20 +1,7 @@
-import axios from "axios";
 import API from "./axios";
 
-export const createOrder = async (data) => {
-
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  return axios.post(
-    "http://localhost:5000/api/orders",
-    data,
-    {
-      headers: {
-        Authorization: `Bearer ${user.token}`
-      }
-    }
-  );
-
+export const createOrder = (data) => {
+  return API.post("/api/orders", data);
 };
 
 export const getMyOrders = () => {

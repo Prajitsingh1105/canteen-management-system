@@ -50,6 +50,7 @@ function Login() {
   // 🔑 Manual Login with validation
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Login button clicked");
 
     // 🚨 VALIDATIONS
     if (!email) {
