@@ -4,9 +4,8 @@ const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL
 });
 
-// attach JWT token automatically
+// Attach JWT token automatically
 API.interceptors.request.use((req) => {
-
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (user?.token) {
@@ -14,7 +13,6 @@ API.interceptors.request.use((req) => {
   }
 
   return req;
-
 });
 
 export default API;
