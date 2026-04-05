@@ -43,6 +43,9 @@ app.use("/api/analytics", analyticsRoutes);
 app.get("/", (req, res) => {
   res.send("Canteen Management API Running");
 });
+app.get("/api/test", (req, res) => {
+  res.json({ working: true });
+});
 
 const PORT = process.env.PORT || 5000;
 
