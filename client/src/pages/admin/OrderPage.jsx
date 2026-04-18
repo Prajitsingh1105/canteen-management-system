@@ -24,7 +24,7 @@ function AdminOrdersPage() {
       await api.patch(`/api/orders/${id}`, { status });
       toast.success(`Order marked as ${status}`);
       fetchOrders();
-    } catch {
+    } catch (err) {
       toast.error("Failed to update status");
     }
   };
@@ -83,6 +83,7 @@ function AdminOrdersPage() {
                   <p className="text-2xl font-black text-white">
                     ₹{order.totalAmount}
                   </p>
+
                   <p
                     className={`text-[10px] font-bold uppercase tracking-widest ${
                       order.status === "Completed"
