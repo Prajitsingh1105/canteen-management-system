@@ -20,12 +20,13 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "http://localhost:5173",
-    "https://dwhqr63p4fqxf.cloudfront.net"
+    "http://flasheats-client.s3-website-us-east-1.amazonaws.com",
+    "http://localhost:5173"
   ],
-  credentials: true
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
-app.options('/*', cors());
+app.options('*', cors());
 
 app.use(express.json());
 
