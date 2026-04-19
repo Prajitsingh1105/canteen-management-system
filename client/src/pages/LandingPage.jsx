@@ -4,7 +4,7 @@ import { FiArrowRight, FiCheckCircle, FiClock, FiShield, FiBarChart2 } from "rea
 import analyticsVideo from "../assets/videos/Analytics.mp4";
 import menuVideo from "../assets/videos/Menu.mp4";
 import orderVideo from "../assets/videos/Order.mp4";
-
+import { useRef } from "react";
 
 function LandingPage() {
   const containerVariants = {
@@ -21,6 +21,20 @@ function LandingPage() {
   };
 
   const FeatureCard = ({ icon, title, desc, video }) => {
+    const videoRef = useRef(null);
+
+    const handlePlay = async () => {
+      try {
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.currentTime = 0;
+          await videoRef.current.play();
+        }
+      } catch (error) {
+        console.log("Autoplay blocked:", error);
+      }
+    };
+
     return (
       <motion.div
         variants={itemVariants}
@@ -40,13 +54,15 @@ function LandingPage() {
           <div className="aspect-video w-full">
             {video ? (
               <video
+                ref={videoRef}
                 className="w-full h-full object-cover"
                 src={video}
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload="auto"
+                onLoadedData={handlePlay}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[11px] tracking-[0.35em] text-gray-500">
@@ -125,6 +141,7 @@ function LandingPage() {
                 className="w-full h-auto object-cover"
               />
             </div>
+
             {/* Floating Card Element */}
             <motion.div
               animate={{ y: [0, -20, 0] }}
@@ -132,7 +149,9 @@ function LandingPage() {
               className="absolute -bottom-6 -left-6 z-20 bg-slate-900/90 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-2xl hidden md:block"
             >
               <div className="flex items-center gap-3">
-                <div className="bg-green-500/20 p-2 rounded-full"><FiCheckCircle className="text-green-500" /></div>
+                <div className="bg-green-500/20 p-2 rounded-full">
+                  <FiCheckCircle className="text-green-500" />
+                </div>
                 <div>
                   <p className="text-xs text-gray-400">Order Ready!</p>
                   <p className="text-sm font-bold">Pick up at Counter 2</p>
@@ -160,7 +179,6 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* ✨ FEATURES SECTION */}
       {/* ✨ FEATURES SECTION */}
       <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-20">
@@ -209,6 +227,7 @@ function LandingPage() {
               Create Your Account
             </Link>
           </div>
+
           {/* Decorative circles */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-40 h-40 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -225,25 +244,6 @@ function LandingPage() {
         <p className="text-gray-600 text-sm">© 2026 Smart Canteen Ecosystem. All rights reserved.</p>
       </footer>
     </div>
-  );
-}
-
-function FeatureCard({ icon, title, desc }) {
-  return (
-    <motion.div
-      variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-      whileHover={{ y: -10 }}
-      className="bg-white/[0.03] border border-white/10 p-8 rounded-[2rem] hover:bg-white/[0.05] transition-all group"
-    >
-      <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner">
-        {icon}
-      </div>
-      <h3 className="text-xl font-bold mb-4">{title}</h3>
-      <p className="text-gray-400 leading-relaxed mb-6">{desc}</p>
-      <div className="h-32 bg-black/40 rounded-xl flex items-center justify-center border border-white/5 overflow-hidden">
-        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-600">Visual Preview</span>
-      </div>
-    </motion.div>
   );
 }
 
