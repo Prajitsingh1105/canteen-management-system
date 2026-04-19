@@ -16,19 +16,17 @@ connectDB();
 const app = express();
 
 
-app.use(
-  cors({
-    origin: [
-      "http://flasheats-client.s3-website-us-east-1.amazonaws.com",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
+app.use(cors({
+  origin: [
+    "http://flasheats-client.s3-website-us-east-1.amazonaws.com",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.options("*", cors());
+
 
 
 app.use(express.json());
