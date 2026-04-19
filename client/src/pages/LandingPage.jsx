@@ -38,7 +38,8 @@ function LandingPage() {
     return (
       <motion.div
         variants={itemVariants}
-        className="rounded-[32px] border border-white/10 bg-[#071027] p-8"
+        onViewportEnter={handlePlay}
+        className="group rounded-[32px] border border-white/10 bg-[#071027] p-8 transition-all duration-500 hover:-translate-y-1 hover:border-white/15 hover:shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
       >
         <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5">
           {icon}
@@ -50,20 +51,23 @@ function LandingPage() {
           {desc}
         </p>
 
-        <div className="rounded-2xl overflow-hidden border border-white/5 bg-black/40">
-          <div className="aspect-video w-full">
+        <div className="rounded-2xl overflow-hidden border border-white/5 bg-black/40 transition-all duration-500 group-hover:border-white/10">
+          <div className="relative h-[220px] md:h-[250px] w-full overflow-hidden rounded-2xl bg-[#020817]">
             {video ? (
-              <video
-                ref={videoRef}
-                className="w-full h-full object-cover"
-                src={video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                onLoadedData={handlePlay}
-              />
+              <>
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover scale-[1.08] group-hover:scale-[1.18] transition-transform duration-700 ease-out"
+                  src={video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  onLoadedData={handlePlay}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020817]/40 via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-500" />
+              </>
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[11px] tracking-[0.35em] text-gray-500">
                 VISUAL PREVIEW
