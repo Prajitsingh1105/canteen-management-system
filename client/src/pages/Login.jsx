@@ -48,42 +48,51 @@ function Login() {
   };
 
   // 🔑 Manual Login with validation
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    console.log("Login button clicked");
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  console.log("Login button clicked");
 
-    // 🚨 VALIDATIONS
-    if (!email) {
-      return alert("Email is required");
-    }
+  if (!email) return alert("Email is required");
 
-    if (role === "student" && !password) {
-      return alert("Password is required");
-    }
+  if (role === "student" && !password) {
+    return alert("Password is required");
+  }
 
-    if (role === "admin" && !otp) {
-      return alert("OTP is required");
-    }
+  if (role === "admin" && !otp) {
+    return alert("OTP is required");
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const res = await loginUser({
-        email,
-        password: role === "student" ? password : undefined,
-        otp: role === "admin" ? otp : undefined,
-        role,
-      });
+    const res = await loginUser({
+      email,
+      password: role === "student" ? password : undefined,
+      otp: role === "admin" ? otp : undefined,
+      role,
+    });
 
-      localStorage.setItem("user", JSON.stringify(res.data));
-      navigate(res.data.role === "admin" ? "/admin" : "/student");
+    const user = res.data.user;
+    const token = res.data.token;
 
-    } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // ✅ IMPORTANT FIXES
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+
+    // set axios default header immediately
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    // navigate AFTER state is ready
+    navigate(user.role === "admin" ? "/admin" : "/student", {
+      replace: true,
+    });
+
+  } catch (err) {
+    alert(err.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
