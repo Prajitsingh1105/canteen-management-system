@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 import API from "../api/axios";
 import { loginUser } from "../api/authApi";
@@ -15,7 +16,9 @@ function Login() {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Google Login
+  // 👁️ NEW STATE
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleGoogleResponse = async (credentialResponse) => {
     try {
       setLoading(true);
@@ -24,8 +27,15 @@ function Login() {
         token: credentialResponse.credential,
       });
 
-      localStorage.setItem("user", JSON.stringify(res.data));
-      navigate("/student");
+      const user = res.data.user || res.data;
+      const token = res.data.token;
+
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      navigate("/student", { replace: true });
     } catch (err) {
       alert("Google login failed. Use your college email.");
     } finally {
@@ -33,66 +43,57 @@ function Login() {
     }
   };
 
-  // 🔐 Send OTP
   const sendOtp = async () => {
-    if (!email) {
-      return alert("Please enter email first");
-    }
+    if (!email) return alert("Please enter email first");
 
     try {
       await API.post("/api/auth/send-otp", { email });
       alert("OTP sent to email");
-    } catch (err) {
+    } catch {
       alert("Failed to send OTP");
     }
   };
 
-  // 🔑 Manual Login with validation
- const handleLogin = async (e) => {
-  e.preventDefault();
-  console.log("Login button clicked");
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  if (!email) return alert("Email is required");
+    if (!email) return alert("Email is required");
 
-  if (role === "student" && !password) {
-    return alert("Password is required");
-  }
+    if (role === "student" && !password) {
+      return alert("Password is required");
+    }
 
-  if (role === "admin" && !otp) {
-    return alert("OTP is required");
-  }
+    if (role === "admin" && !otp) {
+      return alert("OTP is required");
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await loginUser({
-      email,
-      password: role === "student" ? password : undefined,
-      otp: role === "admin" ? otp : undefined,
-      role,
-    });
+      const res = await loginUser({
+        email,
+        password: role === "student" ? password : undefined,
+        otp: role === "admin" ? otp : undefined,
+        role,
+      });
 
-    const user = res.data.user;
-    const token = res.data.token;
+      const user = res.data.user || res.data;
+      const token = res.data.token;
 
-    // ✅ IMPORTANT FIXES
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
 
-    // set axios default header immediately
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    // navigate AFTER state is ready
-    navigate(user.role === "admin" ? "/admin" : "/student", {
-      replace: true,
-    });
-
-  } catch (err) {
-    alert(err.response?.data?.message || "Login failed");
-  } finally {
-    setLoading(false);
-  }
-};
+      navigate(user.role === "admin" ? "/admin" : "/student", {
+        replace: true,
+      });
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
@@ -107,7 +108,6 @@ function Login() {
 
         <form onSubmit={handleLogin} className="space-y-4">
 
-          {/* EMAIL */}
           <input
             type="email"
             placeholder="College Email"
@@ -117,19 +117,28 @@ function Login() {
             required
           />
 
-          {/* STUDENT PASSWORD */}
+          {/* 🔐 PASSWORD WITH SHOW/HIDE */}
           {role === "student" && (
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-gray-800 p-3 rounded-lg text-white"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-gray-800 p-3 pr-12 rounded-lg text-white"
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-300 hover:text-white"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           )}
 
-          {/* ADMIN OTP */}
           {role === "admin" && (
             <>
               <button
@@ -151,7 +160,6 @@ function Login() {
             </>
           )}
 
-          {/* ROLE */}
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
@@ -161,7 +169,6 @@ function Login() {
             <option value="admin">Admin</option>
           </select>
 
-          {/* LOGIN BUTTON */}
           <motion.button
             whileTap={{ scale: 0.95 }}
             disabled={loading}
@@ -171,7 +178,6 @@ function Login() {
           </motion.button>
         </form>
 
-        {/* GOOGLE LOGIN */}
         {role === "student" && (
           <div className="mt-6 flex flex-col items-center border-t border-white/10 pt-6">
             <GoogleLogin
