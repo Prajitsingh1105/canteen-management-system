@@ -155,8 +155,11 @@ router.post("/send-otp", async (req, res) => {
     // Send Email
     await sendEmail(
       email,
-      "Your OTP for Canteen Login",
-      `Your OTP is: ${otp}. It will expire in 5 minutes.`
+      "Verification Code for Canteen Login",
+      `Dear User, We received a request to log in to your Canteen account.
+      Your One-Time Password (OTP) is: ${otp} This OTP is valid for 5 minutes. Please do not share it with anyone for security reasons. If you did not request this, please ignore this email.
+      Regards,  
+      Canteen Team`
     );
 
     res.json({ message: "OTP sent to your email" });
@@ -164,7 +167,7 @@ router.post("/send-otp", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}); 
+});
 
 
 // GOOGLE OAUTH 
