@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiArrowRight, FiCheckCircle, FiClock, FiShield, FiBarChart2 } from "react-icons/fi";
+import analyticsVideo from "../assets/videos/Analytics.mp4";
+import menuVideo from "../assets/videos/Menu.mp4";
+import orderVideo from "../assets/videos/Order.mp4";
+
 
 function LandingPage() {
   const containerVariants = {
@@ -14,6 +18,45 @@ function LandingPage() {
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1 }
+  };
+
+  const FeatureCard = ({ icon, title, desc, video }) => {
+    return (
+      <motion.div
+        variants={itemVariants}
+        className="rounded-[32px] border border-white/10 bg-[#071027] p-8"
+      >
+        <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5">
+          {icon}
+        </div>
+
+        <h3 className="text-3xl font-bold text-white mb-4">{title}</h3>
+
+        <p className="text-gray-400 leading-8 mb-8">
+          {desc}
+        </p>
+
+        <div className="rounded-2xl overflow-hidden border border-white/5 bg-black/40">
+          <div className="aspect-video w-full">
+            {video ? (
+              <video
+                className="w-full h-full object-cover"
+                src={video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-[11px] tracking-[0.35em] text-gray-500">
+                VISUAL PREVIEW
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
   };
 
   return (
@@ -42,7 +85,7 @@ function LandingPage() {
       {/* 🔥 HERO SECTION */}
       <section className="relative pt-20 pb-32 px-6 max-w-7xl mx-auto overflow-hidden">
         <div className="flex flex-col lg:flex-row items-center gap-16">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -69,21 +112,21 @@ function LandingPage() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1 }}
             className="flex-1 relative"
           >
             <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/10">
-              <img 
-                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800" 
+              <img
+                src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800"
                 alt="App Mockup"
                 className="w-full h-auto object-cover"
               />
             </div>
             {/* Floating Card Element */}
-            <motion.div 
+            <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
               className="absolute -bottom-6 -left-6 z-20 bg-slate-900/90 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-2xl hidden md:block"
@@ -118,33 +161,41 @@ function LandingPage() {
       </section>
 
       {/* ✨ FEATURES SECTION */}
+      {/* ✨ FEATURES SECTION */}
       <section id="features" className="py-32 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-4xl font-bold mb-4">Built for Campus Speed</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">Everything you need to manage orders from the kitchen to the student's hands.</p>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Everything you need to manage orders from the kitchen to the student's hands.
+          </p>
         </div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           className="grid md:grid-cols-3 gap-8"
         >
-          <FeatureCard 
+          <FeatureCard
             icon={<FiClock className="text-blue-400" size={24} />}
             title="Pre-Order System"
             desc="Order from your classroom and pick up exactly when the bell rings."
+            video={orderVideo}
           />
-          <FeatureCard 
+
+          <FeatureCard
             icon={<FiShield className="text-indigo-400" size={24} />}
-            title="Secure Payments"
-            desc="Integrated digital wallet for cashless, hassle-free transactions."
+            title="Menu Management"
+            desc="Add items, update prices, and control availability in real time from one admin dashboard."
+            video={menuVideo}
           />
-          <FeatureCard 
+
+          <FeatureCard
             icon={<FiBarChart2 className="text-purple-400" size={24} />}
             title="Admin Insights"
             desc="Real-time analytics for canteen owners to track peak hours and sales."
+            video={analyticsVideo}
           />
         </motion.div>
       </section>
@@ -179,7 +230,7 @@ function LandingPage() {
 
 function FeatureCard({ icon, title, desc }) {
   return (
-    <motion.div 
+    <motion.div
       variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
       whileHover={{ y: -10 }}
       className="bg-white/[0.03] border border-white/10 p-8 rounded-[2rem] hover:bg-white/[0.05] transition-all group"
