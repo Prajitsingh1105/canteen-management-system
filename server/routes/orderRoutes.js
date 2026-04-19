@@ -4,87 +4,83 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-
-// PLACE ORDER
-router.post("/", async (req, res) => {
+const getUserFromToken = (req) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return null;
 
   try {
-
-    const token = req.headers.authorization?.split(" ")[1];
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded.id;
+  } catch (err) {
+    return null;
+  }
+};
 
-    const userId = decoded.id;
+router.post("/", async (req, res) => {
+  try {
+    const userId = getUserFromToken(req);
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
     const { items, totalAmount } = req.body;
 
     const order = new Order({
       user: userId,
       items,
-      totalAmount
+      totalAmount,
     });
 
     await order.save();
-
     res.json(order);
-
   } catch (error) {
-
-    console.error("Order Error:", error);
-
     res.status(500).json({ error: error.message });
-
   }
-
 });
 
-
-
-// ADMIN - GET ALL ORDERS
 router.get("/", async (req, res) => {
-
   try {
-
-    const orders = await Order
-      .find()
+    const orders = await Order.find()
       .populate("user", "name email")
       .populate("items.menuItem", "name price");
 
     res.json(orders);
-
   } catch (error) {
-
     res.status(500).json({ error: error.message });
-
   }
-
 });
 
-
-// STUDENT ORDERS
 router.get("/user/:id", async (req, res) => {
-
   try {
-
-    const orders = await Order
-      .find({ user: req.params.id })
-      .populate("items.menuItem", "name price");
+    const orders = await Order.find({ user: req.params.id }).populate(
+      "items.menuItem",
+      "name price"
+    );
 
     res.json(orders);
-
   } catch (error) {
-
     res.status(500).json({ error: error.message });
-
   }
-
 });
 
-
-// UPDATE STATUS
-router.patch("/:id", async (req, res) => {
-
+router.get("/my-orders", async (req, res) => {
   try {
+    const userId = getUserFromToken(req);
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
+
+    const orders = await Order.find({ user: userId }).populate(
+      "items.menuItem",
+      "name price"
+    );
+
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const userId = getUserFromToken(req);
+    if (!userId) return res.status(401).json({ error: "Unauthorized" });
 
     const { status } = req.body;
 
@@ -94,43 +90,12 @@ router.patch("/:id", async (req, res) => {
       { new: true }
     );
 
-    if (!order) {
-      return res.status(404).json({ error: "Order not found" });
-    }
+    if (!order) return res.status(404).json({ error: "Order not found" });
 
     res.json(order);
-
   } catch (error) {
-
     res.status(500).json({ error: error.message });
-
   }
-
 });
 
 export default router;
-
-
-router.get("/my-orders", async (req, res) => {
-
-  try {
-
-    const token = req.headers.authorization?.split(" ")[1];
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    const orders = await Order
-      .find({ user: decoded.id })
-      .populate("items.menuItem", "name price");
-
-    res.json(orders);
-
-  } catch (error) {
-
-    console.error("My Orders Error:", error);
-
-    res.status(500).json({ error: error.message });
-
-  }
-
-});
