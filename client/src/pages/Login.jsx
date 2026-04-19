@@ -55,45 +55,35 @@ function Login() {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email) return alert("Email is required");
+  try {
+    setLoading(true);
 
-    if (role === "student" && !password) {
-      return alert("Password is required");
-    }
+    const res = await loginUser({
+      email,
+      password: role === "student" ? password : undefined,
+      otp: role === "admin" ? otp : undefined,
+      role,
+    });
 
-    if (role === "admin" && !otp) {
-      return alert("OTP is required");
-    }
+    const { token, role: userRole, name } = res.data;
 
-    try {
-      setLoading(true);
+    const userData = { name, role: userRole, email };
 
-      const res = await loginUser({
-        email,
-        password: role === "student" ? password : undefined,
-        otp: role === "admin" ? otp : undefined,
-        role,
-      });
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", token);
 
-      const user = res.data.user || res.data;
-      const token = res.data.token;
+    navigate(userRole === "admin" ? "/admin" : "/student", {
+      replace: true,
+    });
 
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      navigate(user.role === "admin" ? "/admin" : "/student", {
-        replace: true,
-      });
-    } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    alert(err.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-black via-slate-900 to-black">
