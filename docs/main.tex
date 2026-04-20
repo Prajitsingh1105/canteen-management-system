@@ -1,372 +1,645 @@
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 
-\usetheme{metropolis}
-
+% Packages
 \usepackage{graphicx}
-\usepackage{booktabs}
 \usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{ragged2e}
+\usetikzlibrary{positioning,arrows.meta,calc}
 
-% Updated Green Theme
-\definecolor{maingreen}{RGB}{0,153,102}
+% Clean beamer setup
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{blocks}[rounded]
+\renewcommand{\familydefault}{\sfdefault}
 
-\setbeamercolor{alerted text}{fg=maingreen}
-\setbeamercolor{title}{fg=maingreen}
-\setbeamercolor{frametitle}{fg=maingreen}
+% Colors
+\definecolor{Navy}{HTML}{0F172A}
+\definecolor{Slate}{HTML}{334155}
+\definecolor{Soft}{HTML}{E2E8F0}
+\definecolor{Accent}{HTML}{2563EB}
+\definecolor{Accent2}{HTML}{0EA5E9}
+\definecolor{Success}{HTML}{10B981}
+\definecolor{Warn}{HTML}{F59E0B}
+\definecolor{Bg}{HTML}{F8FAFC}
+\definecolor{Card}{HTML}{FFFFFF}
+\definecolor{Muted}{HTML}{64748B}
 
-\setbeamercolor{block title}{bg=maingreen!25,fg=black}
-\setbeamercolor{block body}{bg=maingreen!8,fg=black}
+\setbeamercolor{normal text}{fg=Navy,bg=Bg}
+\setbeamercolor{frametitle}{fg=Navy,bg=Bg}
+\setbeamercolor{title}{fg=white,bg=Accent}
+\setbeamercolor{structure}{fg=Accent}
 
-\setbeamercolor{alertblock title}{bg=maingreen!40,fg=black}
-\setbeamercolor{alertblock body}{bg=maingreen!10,fg=black}
+% =========================
+% 🔥 PREMIUM HEADER + FOOTER
+% =========================
 
-\title{Mini Project Presentation}
-\subtitle{Online Canteen Management System}
-\author{
-Prajit Kumar Singh\\ 
-Parth Mishra\\ 
-Priyanshu\\ 
-Umang Rana\\
-Sachlang Debbarma
+\setbeamertemplate{headline}{
+\begin{tikzpicture}[remember picture,overlay]
+
+% Top gradient bar
+\fill[Accent] (current page.north west) rectangle ([yshift=-0.9cm]current page.north east);
+
+% Soft accent glow
+\fill[Accent2,opacity=0.18] (current page.north east) circle (1.2cm);
+
+% Left title badge
+\node[anchor=west] at ([xshift=0.5cm,yshift=-0.45cm]current page.north west) {
+    \color{white}\bfseries\small Online Canteen System
+};
+
+% Right mini tag
+\node[anchor=east] at ([xshift=-0.5cm,yshift=-0.45cm]current page.north east) {
+    \color{white}\scriptsize IET Lucknow Project
+};
+
+\end{tikzpicture}
 }
-\date{\today}
+
+\setbeamertemplate{footline}{
+\begin{tikzpicture}[remember picture,overlay]
+
+% Bottom bar
+\fill[Navy] (current page.south west) rectangle ([yshift=0.75cm]current page.south east);
+
+% Soft glow bottom
+\fill[Accent,opacity=0.15] (current page.south west) circle (1.5cm);
+
+% Left footer text
+\node[anchor=west] at ([xshift=0.5cm,yshift=0.35cm]current page.south west) {
+    \color{white}\scriptsize Online Canteen Management System
+};
+
+% Right page counter pill
+\node[anchor=east,fill=white,rounded corners=2mm,inner sep=2pt] at ([xshift=-0.5cm,yshift=0.35cm]current page.south east) {
+    \color{Navy}\scriptsize \insertframenumber~/~\inserttotalframenumber
+};
+
+\end{tikzpicture}
+}
+
+% Card style
+\newtcolorbox{procard}[1][]{
+  enhanced,
+  colback=Card,
+  colframe=Soft,
+  boxrule=0.6pt,
+  arc=2.5mm,
+  left=2mm,right=2mm,top=1.5mm,bottom=1.5mm,
+  width=\linewidth,
+  #1
+}
+
+% Title info
+\title{\textbf{ONLINE CANTEEN MANAGEMENT SYSTEM}}
+\author{Your Name}
+\institute{IET Lucknow}
+\date{Academic Year 2025--2026}
 
 \begin{document}
 
-%--------------------------------
-\begin{frame}
-\titlepage
-\end{frame}
+\begin{document}
 
-%--------------------------------
-\begin{frame}{Project Overview}
-
-\begin{block}{What is Online Canteen Management System?}
-Online Canteen Management System is a web-based platform designed
-to simplify food ordering and management in college canteens.
-Students can order food online and track their order status.
-\end{block}
-
-\begin{columns}
-
-\column{0.48\textwidth}
-
-\begin{alertblock}{Problem}
-\begin{itemize}
-\item Long queues at canteen
-\item Manual order management
-\item Delay in food preparation
-\end{itemize}
-\end{alertblock}
-
-\column{0.48\textwidth}
-
-\begin{block}{Solution}
-\begin{itemize}
-\item Online food ordering
-\item Digital order management
-\item Real-time order tracking
-\end{itemize}
-\end{block}
-
-\end{columns}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}{Technology Stack}
-
-\begin{columns}
-
-\column{0.5\textwidth}
-
-\begin{block}{Frontend}
-\begin{itemize}
-\item React
-\item Tailwind CSS
-\end{itemize}
-\end{block}
-
-\begin{block}{Backend}
-\begin{itemize}
-\item Node.js
-\item Express.js
-\end{itemize}
-\end{block}
-
-\column{0.5\textwidth}
-
-\begin{block}{Database}
-\begin{itemize}
-\item MongoDB
-\end{itemize}
-\end{block}
-
-\begin{block}{Security \& Deployment}
-\begin{itemize}
-\item JWT Authentication
-\item GitHub
-\item Vercel (Frontend)
-\item Render (Backend)
-\end{itemize}
-\end{block}
-
-\end{columns}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}{System Architecture}
-
-\begin{center}
-\includegraphics[width=1.1\textwidth,height=0.75\textheight,keepaspectratio]{canteen_architecture.png}
-\end{center}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}{System Flow}
-
-\begin{center}
-
-\begin{tikzpicture}[node distance=1.8cm,
-every node/.style={draw, rounded corners, align=center}]
-
-\node (login) {Student Login};
-\node (menu) [below of=login] {Browse Menu};
-\node (order) [below of=menu] {Place Order};
-\node (backend) [below of=order] {Backend API};
-\node (db) [below of=backend] {MongoDB Database};
-
-\node (admin) [right of=backend, xshift=4cm] {Canteen Dashboard};
-\node (update) [below of=admin] {Update Order Status};
-
-\draw[->] (login) -- (menu);
-\draw[->] (menu) -- (order);
-\draw[->] (order) -- (backend);
-\draw[->] (backend) -- (db);
-
-\draw[->] (backend) -- (admin);
-\draw[->] (admin) -- (update);
-\draw[->] (update) -- (backend);
-
+% Slide 1
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+\fill[Navy] (current page.south west) rectangle (current page.north east);
+\fill[Accent,opacity=0.12] ($(current page.north east)+(-1.6,-1.0)$) circle (2cm);
+\fill[Accent2,opacity=0.12] ($(current page.south west)+(1.4,1.0)$) circle (1.8cm);
 \end{tikzpicture}
 
-\end{center}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}{Backend API Structure}
-
-\begin{block}{Authentication APIs}
-\begin{itemize}
-\item POST /register
-\item POST /login
-\end{itemize}
-\end{block}
-
-\begin{block}{Order APIs}
-\begin{itemize}
-\item GET /menu
-\item POST /order/create
-\item GET /order/my-orders
-\item GET /order/all (Admin)
-\item PATCH /order/update-status
-\end{itemize}
-\end{block}
-
-\begin{block}{Security}
-\begin{itemize}
-\item JWT based authentication
-\item Role-based authorization
-\item Password hashing using bcrypt
-\end{itemize}
-\end{block}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}{Key Features}
-
-\begin{block}{Online Food Ordering}
-Students can order food directly from their mobile or laptop.
-\end{block}
-
-\begin{block}{Order Tracking}
-Students can monitor the status of their food orders in real time.
-\end{block}
-
-\begin{block}{Secure Authentication}
-JWT-based login system with role verification.
-\end{block}
-
-\begin{block}{Admin Dashboard}
-Canteen staff can manage incoming orders and update their status.
-\end{block}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}{Comparison with Existing Systems}
-
+\vspace{1.3cm}
 \begin{center}
+{\fontsize{26}{30}\selectfont\bfseries\color{white} ONLINE CANTEEN}\\[0.15cm]
+{\fontsize{26}{30}\selectfont\bfseries\color{white} MANAGEMENT SYSTEM}
 
-\resizebox{\textwidth}{!}{
-\begin{tabular}{lccc}
-\toprule
-Feature & Manual System & Existing Systems & Proposed System \\
-\midrule
-Food Ordering & Offline & Limited & Online Portal \\
-Queue Management & No & Partial & Yes \\
-Order Tracking & No & No & Yes \\
-Digital Payments & No & Limited & Yes \\
-Central Dashboard & No & No & Yes \\
-\bottomrule
-\end{tabular}
-}
+\vspace{0.45cm}
+{\large\color{white!90} A Smart Digital Platform for Campus Food Ordering}
 
+\vspace{0.9cm}
+\begin{procard}[width=0.62\textwidth,colback=white,colframe=white]
+\centering
+{\normalsize \textbf{Group - PARSE}}\\[0.2cm]
+Prajit Kumar Singh (2400520100054)\\
+Parth Mishra (2400520100053)\\
+Priyanshu (2400520100057)\\
+Sachlang Debbarma (2400520100063)\\
+Umang Rana (2400520100070)
+\end{procard}
 \end{center}
-
 \end{frame}
 
-%--------------------------------
-\begin{frame}{Project Workflow}
+% Slide 2
+\begin{frame}{Agenda}
+\begin{procard}
+\begin{enumerate}
+    \item Introduction
+    \item Problem Statement and Objectives
+    \item Modules and Features
+    \item System Architecture and Workflow
+    \item Technology Stack
+    \item Database Design
+    \item Interface Screens
+    \item Benefits and Future Scope
+    \item Conclusion
+\end{enumerate}
+\end{procard}
+\end{frame}
 
-\begin{columns}
+% Slide 3
+\begin{frame}{Introduction}
+\vspace*{-0.75cm} 
+\begin{columns}[T,onlytextwidth]
+\column{0.58\textwidth}
 
-\column{0.5\textwidth}
+\begin{procard}
+\small
+\justifying
+The \textbf{Online Canteen Management System} is a web-based platform for campus food ordering. It allows users to browse menu items, place orders, make payments, and track order status digitally while helping the administrator manage menu, stock, and orders efficiently.
+\end{procard}
 
-\begin{block}{Planning}
+\vspace{0.12cm}
+
+\begin{procard}
+\small
+\textbf{Target Users}
+
+\vspace{0.05cm}
 \begin{itemize}
-\item Define project objectives
-\item Identify system users
-\item Analyze canteen management problems
+    \setlength{\itemsep}{2pt}
+    \setlength{\parskip}{0pt}
+    \item Students
+    \item Faculty and staff
+    \item Canteen administrator
+    \item Kitchen staff
 \end{itemize}
-\end{block}
+\end{procard}
 
-\begin{block}{Design}
-\begin{itemize}
-\item System architecture
-\item UI wireframes
-\item Database design
-\end{itemize}
-\end{block}
+\column{0.38\textwidth}
 
-\column{0.5\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Accent}\faUtensils}\\[0.1cm]
+\textbf{Digital Ordering}\\
+{\scriptsize\color{Muted} Faster and easier food requests}
+\end{procard}
 
-\begin{block}{Development}
-\begin{itemize}
-\item Backend API creation
-\item Authentication system
-\item Frontend interface development
-\end{itemize}
-\end{block}
+\vspace{0.12cm}
 
-\begin{block}{Deployment}
-\begin{itemize}
-\item Integrate frontend and backend
-\item Deploy using Vercel and Render
-\item Connect MongoDB database
-\end{itemize}
-\end{block}
+\begin{procard}
+\centering
+{\Large\color{Success}\faClock}\\[0.1cm]
+\textbf{Less Waiting}\\
+{\scriptsize\color{Muted} Reduces crowd at the counter}
+\end{procard}
 
 \end{columns}
-
 \end{frame}
 
-%--------------------------------
-\begin{frame}{Project Status}
 
-\begin{columns}
-
-\column{0.5\textwidth}
-
-\begin{block}{Completed}
+% Slide 4
+\begin{frame}{Problem Statement and Objectives}
+\vspace*{-0.75cm} 
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{procard}
+\textbf{\color{Warn}Current Problems}
 \begin{itemize}
-\item Requirement Analysis
-\item System Architecture
-\item Database Structure
+    \item Long queues during break time
+    \item Manual order handling is slow
+    \item Order mistakes are common
+    \item No live status tracking
+    \item Difficult sales and stock management
 \end{itemize}
-\end{block}
+\end{procard}
 
-\column{0.5\textwidth}
-
-\begin{alertblock}{In Progress}
+\column{0.48\textwidth}
+\begin{procard}
+\textbf{\color{Success}Project Objectives}
 \begin{itemize}
-\item Backend API Development
-\item Order Management System
-\item Frontend UI Development
+    \item Provide online food ordering
+    \item Reduce waiting time
+    \item Improve order accuracy
+    \item Support digital payment
+    \item Help admin manage menu and orders
 \end{itemize}
-\end{alertblock}
+\end{procard}
+\end{columns}
+\end{frame}
 
+% Slide 5
+\begin{frame}{Core Modules}
+\vspace*{-0.75cm}
+\begin{columns}[T]
+\column{0.32\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Accent}\faUser}\\[0.2cm]
+\textbf{User Module}\\
+\vspace{0.1cm}
+{\small Register, login, browse menu, add to cart, and place orders.}
+\end{procard}
+
+\column{0.32\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Accent2}\faClipboardList}\\[0.2cm]
+\textbf{Order Module}\\
+\vspace{0.1cm}
+{\small Order summary, order history, order status, and confirmation.}
+\end{procard}
+
+\column{0.32\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Success}\faUserShield}\\[0.2cm]
+\textbf{Admin Module}\\
+\vspace{0.1cm}
+{\small Manage menu items, prices, stock, users, and incoming orders.}
+\end{procard}
 \end{columns}
 
-\vspace{0.5cm}
-
-\begin{center}
-\textbf{Current Phase: Development}
-\end{center}
-
+\vspace{0.3cm}
+\begin{procard}
+\centering
+\textbf{Order Lifecycle Module:} Manages order flow from placement to completion with status updates.
+\end{procard}
 \end{frame}
 
-%--------------------------------
-\begin{frame}{Impact of the System}
+% Slide 6
+\begin{frame}{System Architecture}
+\centering
+\begin{tikzpicture}[
+node distance=1.8cm and 1.5cm,
+box/.style={draw=Soft, fill=white, rounded corners=2mm, minimum width=3cm, minimum height=1.1cm, align=center},
+line/.style={-{Latex[length=2.5mm]}, thick, draw=Accent}
+]
+\node[box] (u) {Users};
+\node[box, right=of u] (f) {Frontend\\React / Web UI};
+\node[box, right=of f] (b) {Backend\\Node.js / Express};
+\node[box, below=of b] (d) {Database\\MongoDB / MySQL};
+\node[box, below=of f] (a) {Admin Dashboard};
 
-\begin{itemize}
-\item Reduced waiting time in canteen
-\item Faster food service
-\item Digital order records
-\item Efficient canteen management
-\item Improved student experience
-\end{itemize}
+\draw[line] (u) -- (f);
+\draw[line] (f) -- (b);
+\draw[line] (b) -- (d);
+\draw[line] (a) -- (b);
+\draw[line] (b) to[bend left=15] (f);
+\end{tikzpicture}
 
+\vspace{0.4cm}
+\begin{procard}
+The system connects users with a frontend interface, processes requests in the backend, and stores all menu, order, and payment data in the database.
+\end{procard}
 \end{frame}
 
-%--------------------------------
-\begin{frame}{Future Enhancements}
-
-\begin{columns}
-
-\column{0.5\textwidth}
-
-\begin{block}{Smart Features}
-\begin{itemize}
-\item AI-based food recommendations
-\item Automatic order prioritization
-\item Smart inventory management
-\end{itemize}
-\end{block}
-
-\column{0.5\textwidth}
-
-\begin{block}{System Improvements}
-\begin{itemize}
-\item Real-time notifications
-\item Analytics dashboard
-\end{itemize}
-\end{block}
-
-\end{columns}
-
-\end{frame}
-
-%--------------------------------
-\begin{frame}
-
+% Slide 7
+\begin{frame}{Order Workflow}
+\vspace*{-0.75cm}
 \centering
 
-\Huge Thank You
+% Workflow Image
+\begin{figure}
+    \includegraphics[width=0.88\textwidth]{workflow.png}
+\end{figure}
 
-\vspace{0.5cm}
+\vspace{0.4cm}
 
-\Large Questions?
-
-\vspace{0.7cm}
-
+% Description box
+\begin{beamercolorbox}[wd=0.9\textwidth,rounded=true,shadow=true,sep=8pt]{block body}
+\centering
 \small
-Online Canteen Management System
+Users log in, browse the menu, add items to cart, and place an order. The system then processes the order in the kitchen, updates real-time status, and finally delivers or allows pickup of the food.
+\end{beamercolorbox}
 
+\end{frame}
+
+% Slide 8
+\begin{frame}{Technology Stack}
+
+\vspace*{-0.85cm}
+
+\begin{columns}[T]
+
+% ---------------- LEFT SIDE ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\textbf{Frontend}
+\begin{itemize}
+    \item HTML, CSS, JS
+    \item React.js
+    \item Tailwind 
+    \item Axios
+\end{itemize}
+\end{procard}
+
+\vspace{0.10cm}
+
+\begin{procard}
+\textbf{Backend}
+\begin{itemize}
+    \item Node.js
+    \item Express.js
+    \item REST APIs
+    \item JWT Auth
+\end{itemize}
+\end{procard}
+
+% ---------------- RIGHT SIDE ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\textbf{Database}
+\begin{itemize}
+    \item MongoDB
+    \item Users data
+    \item Menu items
+    \item Orders
+\end{itemize}
+\end{procard}
+
+\vspace{0.10cm}
+
+\begin{procard}
+\textbf{Tools}
+\begin{itemize}
+    \item Git & GitHub
+    \item VS Code
+    \item Postman
+    \item AWS
+\end{itemize}
+\end{procard}
+
+\end{columns}
+
+\end{frame}
+
+% Slide 9
+\begin{frame}{Database Design}
+\begin{procard}
+\begin{tabular}{>{\bfseries}p{3cm} p{8cm}}
+Users & userId, name, email, password, role \\
+MenuItems & itemId, itemName, category, price, stock, availability \\
+Orders & orderId, userId, itemList, totalAmount, status, timestamp \\
+
+\end{tabular}
+\end{procard}
+
+\vspace{0.3cm}
+\begin{procard}
+A user can place multiple orders, each order contains menu items, and every order is associated with a payment record and order status.
+\end{procard}
+\end{frame}
+
+
+
+
+%Slide 10
+\begin{frame}{Interface Screens}
+
+\vspace*{-0.75cm}
+
+\begin{columns}[T]
+
+% ---------------- LEFT ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\centering
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.9\textwidth]{landing.png}
+
+\vspace{0.2cm}
+
+\textbf{Landing Page}
+
+\vspace{0.2cm}
+
+{\small Home page showing menu highlights and system overview}
+
+\vspace{0.2cm}
+
+\end{procard}
+
+% ---------------- RIGHT ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\centering
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.9\textwidth]{login.png}
+
+\vspace{0.2cm}
+
+\textbf{Login / Register Page}
+
+\vspace{0.2cm}
+
+{\small Users authenticate to access dashboard and place orders}
+
+\vspace{0.2cm}
+
+\end{procard}
+
+\end{columns}
+
+\end{frame}
+
+
+%Slide 11
+\begin{frame}{Interface Screens}
+
+\vspace*{-0.75cm}
+
+\begin{columns}[T]
+
+% ---------------- LEFT ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\centering
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.9\textwidth]{student.png}
+
+\vspace{0.2cm}
+
+\textbf{Student Dashboard}
+
+\vspace{0.2cm}
+
+{\small User can browse menu and select items}
+
+\vspace{0.2cm}
+
+\end{procard}
+
+% ---------------- RIGHT ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\centering
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.9\textwidth]{admin.png}
+
+\vspace{0.2cm}
+
+\textbf{Admin Dashboard}
+
+\vspace{0.2cm}
+
+{\small Admin manages orders, menu, and users}
+
+\vspace{0.2cm}
+
+\end{procard}
+
+\end{columns}
+
+\end{frame}
+
+%Slide 12
+\begin{frame}{Database: Menu Items \& Orders}
+
+\vspace*{-0.75cm}
+
+\begin{columns}[T]
+
+% ---------------- LEFT ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\centering
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.9\textwidth]{menu.png}
+
+\vspace{0.2cm}
+
+\textbf{Menu Items Collection}
+
+\vspace{0.2cm}
+
+{\small Stores food name, category, price}
+
+\vspace{0.2cm}
+
+\end{procard}
+
+% ---------------- RIGHT ----------------
+\column{0.48\textwidth}
+
+\begin{procard}
+\centering
+
+\vspace{0.2cm}
+
+\includegraphics[width=0.9\textwidth]{order.png}
+
+\vspace{0.2cm}
+
+\textbf{Orders Collection}
+
+\vspace{0.2cm}
+
+{\small Stores user orders, items, total amount, and status tracking}
+
+\vspace{0.2cm}
+
+\end{procard}
+
+\end{columns}
+
+\end{frame}
+
+% Slide 13
+\begin{frame}{Benefits and Future Scope}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{procard}
+\textbf{Benefits}
+\begin{itemize}
+    \item Faster service
+    \item Improved order accuracy
+    \item Better user convenience
+    \item Easy admin management
+\end{itemize}
+\end{procard}
+
+\column{0.48\textwidth}
+\begin{procard}
+\textbf{Future Scope}
+\begin{itemize}
+    \item Payment Integration
+    \item Mobile Application Support
+    \item Delivery tracking system
+    \item User feedback and rating System
+\end{itemize}
+\end{procard}
+\end{columns}
+\end{frame}
+
+% Slide 14
+\begin{frame}{Conclusion}
+\begin{procard}
+\justifying
+The \textbf{Online Canteen Management System} provides a professional digital solution for campus food ordering by reducing waiting time, improving order management, and supporting a better user experience for both customers and canteen administrators.
+\end{procard}
+
+\vspace{0.4cm}
+\begin{columns}[T]
+\column{0.32\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Accent}\faBolt}\\
+\textbf{Fast}
+\end{procard}
+
+\column{0.32\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Success}\faCheckCircle}\\
+\textbf{Efficient}
+\end{procard}
+
+\column{0.32\textwidth}
+\begin{procard}
+\centering
+{\Large\color{Accent2}\faDesktop}\\
+\textbf{Digital}
+\end{procard}
+\end{columns}
+\end{frame}
+
+% Slide 15
+\begin{frame}[plain]
+\begin{tikzpicture}[remember picture,overlay]
+\fill[Navy] (current page.south west) rectangle (current page.north east);
+\fill[Accent,opacity=0.12] ($(current page.north east)+(-1.6,-1.0)$) circle (2cm);
+\fill[Accent2,opacity=0.12] ($(current page.south west)+(1.4,1.0)$) circle (1.8cm);
+\end{tikzpicture}
+
+\vspace{2.2cm}
+\begin{center}
+{\Huge\bfseries\color{white} Thank You}
+
+\vspace{0.25cm}
+{\large\color{white!85} Questions and Discussion}
+\end{center}
 \end{frame}
 
 \end{document}
