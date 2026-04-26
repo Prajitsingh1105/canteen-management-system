@@ -14,7 +14,8 @@ const ADMIN_WHITELIST = [
   "admin1@ietlucknow.ac.in",
   "canteen@ietlucknow.ac.in",
   "2400520100016@ietlucknow.ac.in",
-  "2400520200008@ietlucknow.ac.in"
+  "2400520200008@ietlucknow.ac.in",
+  "2400520100070@ietlucknow.ac.in"
 ];
 
 
