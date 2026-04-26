@@ -140,3 +140,65 @@ The system follows a **full-stack web architecture**:
 
 ---
 
+# 🔗 Live Demo
+
+- 🌍 Frontend: http://flasheats-client.s3-website-us-east-1.amazonaws.com
+- 🔗 Backend API: http://54.198.200.88:5000
+
+---
+
+# ⚙️ Installation Guide
+
+- Clone the repository
+git clone https://github.com/Prajitsingh1105/canteen-management-system.git
+
+- Install dependencies
+  - cd client
+  - npm install
+
+  - cd ../server
+  - npm install
+
+- Run the project
+  - npm run dev
+
+---
+
+# 🔄 Order Flow
+
+1. User logs in
+2. Selects food items
+3. Places order
+4. Order stored in database
+5. Admin receives order
+6. Admin updates status
+7. User tracks order
+
+---
+
+# 📡 API Endpoints
+
+## Auth
+POST /api/auth/register
+POST /api/auth/login
+
+## Orders
+GET /api/orders
+POST /api/orders
+PUT /api/orders/:id
+
+---
+
+# 💡 Why FlashEats?
+
+This project was built to solve real problems faced in college canteens like long queues and inefficient order handling. It focuses on improving user experience and operational efficiency.
+
+---
+
+# 📜 License
+
+This project is licensed under the MIT License.
+See the LICENSE file for details.
+
+
+
